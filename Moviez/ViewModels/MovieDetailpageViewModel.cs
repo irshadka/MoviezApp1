@@ -44,8 +44,12 @@ namespace Moviez.ViewModels
             if (Moviedata != null)
             {
                 MovieDetails.MoviePoster = MoviezAppConstants.TMDBimageDetailPath + Moviedata.poster_path;
-                GetMovieDetails(Moviedata.id.ToString());
-                GetMovieCredits(Moviedata.id.ToString());
+                Task.Run(() =>{
+
+                    GetMovieDetails(Moviedata.id.ToString());
+                    GetMovieCredits(Moviedata.id.ToString());
+                });
+               
             }
 
         }

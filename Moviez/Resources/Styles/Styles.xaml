@@ -428,7 +428,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansSemibold"/>
         <Setter Property="FontSize"
-                Value="{OnIdiom Phone= {OnPlatform iOS=17, Android=17 },Tablet= {OnPlatform iOS=19, Android=19 }}"/>
+                Value="{OnIdiom Phone= {OnPlatform iOS=17, Android=17 },Tablet= {OnPlatform iOS=20, Android=20 }}"/>
         
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource TitleColor}, Dark={StaticResource TitleColor}}"/>
@@ -437,10 +437,10 @@
     <Style TargetType="Label"
            x:Key="MovieDescriptionStyle">
         <Setter Property="FontFamily"
-                Value="OpenSansSemibold"/>
+                Value="OpenSansRegular"/>
         <Setter Property="LineHeight" Value="1.1"/>
         <Setter Property="FontSize"
-                Value="{OnIdiom Phone= {OnPlatform iOS=13, Android=13 },Tablet= {OnPlatform iOS=15, Android=15 }}"/>
+                Value="{OnIdiom Phone= {OnPlatform iOS=13, Android=13 },Tablet= {OnPlatform iOS=16, Android=16 }}"/>
         <Setter Property="TextColor"
                 Value="{AppThemeBinding Light={StaticResource DescriptionColor}, Dark={StaticResource DescriptionColor}}"/>
     </Style>

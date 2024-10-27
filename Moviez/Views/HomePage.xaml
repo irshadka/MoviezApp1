@@ -150,7 +150,7 @@
                                     Grid.Row="1"
                                     Text="{Binding overview}"
                                     Style="{StaticResource MovieDescriptionStyle}"
-                                    MaxLines="3"
+                                    MaxLines="4"
                                     TextColor="#7B829A"
                                     LineBreakMode="WordWrap" />
                                 <Grid.GestureRecognizers>
