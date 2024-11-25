@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Moviez.Common;
 using Moviez.Interfaces;
@@ -10,42 +11,22 @@ using Moviez.Views;
 
 namespace Moviez.ViewModels
 {
-    public class HomePageViewModel : PageBaseViewModel
+    public partial class HomePageViewModel : PageBaseViewModel
     {
         private IMoviezAPIService _movieApiService;
 
         private bool _hasMoreItems;
         private int _currentPage;
         private int _totalPages;
+        [ObservableProperty]
         private string _searchBarText;
         private ObservableCollection<MoviesData> _baseMoviesData { get; set; }
+        [ObservableProperty]
         private ObservableCollection<MoviesData> _movies;
-
-
-        public string SearchBarText
-        {
-            get => _searchBarText;
-            set => SetProperty(ref _searchBarText, value);
-        }
-
-        public ObservableCollection<MoviesData> Movies
-        {
-            get => _movies;
-            set => SetProperty(ref _movies, value);
-        }
-        public ICommand SearchMoviesCommand { get; set; }
-        public ICommand MovieTappedCommand { private set; get; }
-        public ICommand LoadMoreItemsCommand { get; }
-        public ICommand SearchBarTextChangedCommand { get; }
         public HomePageViewModel(IMoviezAPIService movieApiService)
         {
             _movieApiService = movieApiService;
-            SearchMoviesCommand = new AsyncRelayCommand<string>(async (query) =>
-            {
-                await SearchMoviesAsync(query);
-            });
-            MovieTappedCommand = new Command<MoviesData>((selectedItem) => ExecuteMovieTappedCommand(selectedItem));
-            LoadMoreItemsCommand = new AsyncRelayCommand(LoadMoreItemsAsync);
+
             IsBusy = true;
             Task.Run(() =>
             {
@@ -53,10 +34,15 @@ namespace Moviez.ViewModels
                 _currentPage = 1;
                 GetTrendingMoviesAsync(_currentPage);
             });
-            SearchBarTextChangedCommand = new Command(() => ExecuteSearchBarTextChangedCommand());
         }
 
-        private void ExecuteSearchBarTextChangedCommand()
+        [RelayCommand]
+        private async Task SearchMovies(string query)
+        {
+            await SearchMoviesAsync(query);
+        }
+        [RelayCommand]
+        private void SearchBarTextChanged()
         {
             Debug.WriteLine(SearchBarText);
             if (SearchBarText == string.Empty)
@@ -66,12 +52,12 @@ namespace Moviez.ViewModels
                     Movies = _baseMoviesData;
                     NoDataLabelVisible = false;
                 }
-                    
+
 
             }
         }
-
-        private async void ExecuteMovieTappedCommand(MoviesData selectedItem)
+        [RelayCommand]
+        private async Task MovieTapped(MoviesData selectedItem)
         {
             var navigationParameter = new ShellNavigationQueryParameters
             {
@@ -80,7 +66,8 @@ namespace Moviez.ViewModels
             await Shell.Current.GoToAsync(nameof(MovieDetailPage), navigationParameter);
             // await DisplayAlert(AppResources.AppTitle, AppResources.NotImplemented);
         }
-        private async Task LoadMoreItemsAsync()
+        [RelayCommand]
+        private async Task LoadMoreItems()
         {
             if (Movies != _baseMoviesData)
                 return;

@@ -1,9 +1,10 @@
 ﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Moviez.Common;
 
 namespace Moviez.ViewModels
 {
-	public class PageBaseViewModel : BaseViewModel
+	public class PageBaseViewModel : ObservableObject
 	{
         #region Variables
         private bool _isBusy;

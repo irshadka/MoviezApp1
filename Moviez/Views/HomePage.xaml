@@ -32,8 +32,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
                         Width="*" />
-                    <ColumnDefinition
-                        Width="40" />
                 </Grid.ColumnDefinitions>
                 <SearchBar
                     x:Name="SearchBar"
@@ -49,28 +47,10 @@
                             Command="{Binding Source={x:Reference Home}, Path=BindingContext.SearchBarTextChangedCommand}" />
 
                     </SearchBar.Behaviors>
-
                 </SearchBar>
-                <Image
-                    Source="qr_scan"
-                    HeightRequest="30"
-                    WidthRequest="30"
-                    Grid.Column="1">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
-                    </Image.GestureRecognizers>
-
-                </Image>
+              
             </Grid>
-            <cv:CameraView
-                Grid.Row="1"
-                x:Name="cameraView"
-                WidthRequest="300"
-                HeightRequest="200"
-                IsVisible="False"
-                BarCodeDetectionEnabled="True"
-                CamerasLoaded="cameraView_CamerasLoaded" />
+          
             <CollectionView
                 Grid.Row="2"
                 IsVisible="{Binding NoDataLabelVisible, Converter={StaticResource InversionConverter}}"
@@ -80,7 +60,6 @@
                 ItemsSource="{Binding Movies}"
                 SelectionMode="None"
                 RemainingItemsThreshold="5"
-                
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
                 ItemsLayout="VerticalList">
                 <CollectionView.ItemTemplate>

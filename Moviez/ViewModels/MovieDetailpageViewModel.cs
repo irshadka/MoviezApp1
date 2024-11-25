@@ -7,28 +7,16 @@ using Moviez.Models.ApiResponses;
 
 namespace Moviez.ViewModels
 {
-    public class MovieDetailpageViewModel : PageBaseViewModel, IQueryAttributable
+    public partial class MovieDetailpageViewModel : PageBaseViewModel, IQueryAttributable
     {
         private IMoviezAPIService _movieApiService;
+        [ObservableProperty]
         private MoviesData _movieData;
+        [ObservableProperty]
         private MovieDetailsModel _movieDetails;
+        [ObservableProperty]
         private List<Cast> _movieCast;
-        public MoviesData Moviedata
-        {
-            get => _movieData;
-            set => SetProperty(ref _movieData, value);
-        }
 
-        public MovieDetailsModel MovieDetails
-        {
-            get => _movieDetails;
-            set => SetProperty(ref _movieDetails, value);
-        }
-        public List<Cast> MovieCast
-        {
-            get => _movieCast;
-            set => SetProperty(ref _movieCast, value);
-        }
         public MovieDetailpageViewModel(IMoviezAPIService movieApiService)
         {
             _movieApiService = movieApiService;
@@ -38,18 +26,19 @@ namespace Moviez.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Moviedata = query["MovieData"] as MoviesData;
+            MovieData = query["MovieData"] as MoviesData;
             OnPropertyChanged("Moviedata");
 
-            if (Moviedata != null)
+            if (MovieData != null)
             {
-                MovieDetails.MoviePoster = MoviezAppConstants.TMDBimageDetailPath + Moviedata.poster_path;
-                Task.Run(() =>{
+                MovieDetails.MoviePoster = MoviezAppConstants.TMDBimageDetailPath + MovieData.poster_path;
+                Task.Run(() =>
+                {
 
-                    GetMovieDetails(Moviedata.id.ToString());
-                    GetMovieCredits(Moviedata.id.ToString());
+                    GetMovieDetails(MovieData.id.ToString());
+                    GetMovieCredits(MovieData.id.ToString());
                 });
-               
+
             }
 
         }
@@ -65,7 +54,7 @@ namespace Moviez.ViewModels
                         MovieCast = response.cast;
                     }
                 });
-                }
+            }
         }
         private async void GetMovieDetails(string movieId)
         {

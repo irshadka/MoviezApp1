@@ -16,7 +16,7 @@
             RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition
-                    Height="{OnIdiom Phone=500,Tablet=800}" />
+                    Height="{OnIdiom Phone=550,Tablet=850}" />
                 <RowDefinition
                     Height="Auto" />
                 <RowDefinition
@@ -73,11 +73,11 @@
                     VerticalOptions="FillAndExpand"
                     Spacing="15">
                     <Label
-                        Text="{Binding Moviedata.title}"
+                        Text="{Binding MovieData.title}"
                         Style="{StaticResource MovieTitleStyle}"
                         HorizontalTextAlignment="Center"></Label>
                     <Label
-                        Text="{Binding Moviedata.overview}"
+                        Text="{Binding MovieData.overview}"
                         Style="{StaticResource MovieDescriptionStyle}"></Label>
 
                     <Label
@@ -108,10 +108,10 @@
                             <Border
                                 Margin="10"
                                 HeightRequest="135"
-                                WidthRequest="110"
-                                BackgroundColor="White"
+                                WidthRequest="100"
                                 HorizontalOptions="FillAndExpand"
-                                Stroke="White"
+                                Stroke="Transparent"
+                                BackgroundColor="AliceBlue"
                                 VerticalOptions="Fill">
                                 <Border.StrokeShape>
                                     <RoundRectangle
@@ -127,7 +127,7 @@
                                 <Grid
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="Fill"
-                                    Padding="10"
+                                    Padding="5"
                                     RowSpacing="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition
@@ -136,14 +136,16 @@
                                             Height="100" />
                                     </Grid.RowDefinitions>
 
-                                    <Frame
+                                    <Border
                                         Grid.Row="0"
                                         BackgroundColor="White"
-                                        CornerRadius="30"
                                         HeightRequest="60"
                                         WidthRequest="60"
-                                        Padding="0"
-                                        IsClippedToBounds="True">
+                                        Padding="0">
+                                        <Border.StrokeShape>
+                                    <RoundRectangle
+                                        CornerRadius="30" />
+                                </Border.StrokeShape>
                                         <ffimageloading:CachedImage
                                             Grid.Row="0"
                                             VerticalOptions="FillAndExpand"
@@ -152,7 +154,7 @@
                                             Source="{Binding imageUrl}"
                                             HeightRequest="80"
                                             Aspect="AspectFill" />
-                                    </Frame>
+                                    </Border>
 
                                     <Label
                                         Grid.Row="1"
