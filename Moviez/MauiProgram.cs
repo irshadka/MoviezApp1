@@ -16,22 +16,20 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-            .UseFFImageLoading()
-            .UseMauiCameraView()
-            .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
+			.UseFFImageLoading()
+			.UseMauiCameraView()
+			.UseMauiCommunityToolkit()
+			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-        builder.Services.AddSingleton<IMoviezAPIService, MoviezAPIService>();
-        builder.Services.AddTransient<HomePageViewModel>();
-        builder.Services.AddTransient<HomePage>();
-		builder.Services.AddTransient<MovieDetailPage>();
-		builder.Services.AddTransient<MovieDetailpageViewModel>();
+		builder.Services.AddSingleton<IMoviezAPIService, MoviezAPIService>();
+		builder.Services.AddTransient<HomePage, HomePageViewModel>();
+		builder.Services.AddTransient<MovieDetailPage, MovieDetailpageViewModel>();
 #if DEBUG
-        builder.Logging.AddDebug();
+		builder.Logging.AddDebug();
 #endif
 
 		return builder.Build();
