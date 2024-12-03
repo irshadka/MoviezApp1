@@ -43,7 +43,7 @@
                 <Grid Margin="0,0,0,25" Padding="0,0,0,10">
                    
                     <Image
-                        Source="{Binding CastData.imageUrl}"
+                        Source="{Binding CastData.imageUrlLarge}"
                         HeightRequest="500"
                         Aspect="AspectFill"
                         VerticalOptions="StartAndExpand"></Image>

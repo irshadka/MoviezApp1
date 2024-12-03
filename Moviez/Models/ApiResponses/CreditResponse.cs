@@ -3,8 +3,8 @@ using Moviez.Common;
 
 namespace Moviez.Models.ApiResponses
 {
-	public class CreditResponse: BaseResponse
-	{
+    public class CreditResponse : BaseResponse
+    {
         public int id { get; set; }
         public List<Cast> cast { get; set; }
         public List<Crew> crew { get; set; }
@@ -24,6 +24,7 @@ namespace Moviez.Models.ApiResponses
         public string credit_id { get; set; }
         public int order { get; set; }
         public string imageUrl { get => MoviezAppConstants.TMDBCastImagePath + profile_path; }
+        public string imageUrlLarge { get => MoviezAppConstants.TMDBimageDetailPath + profile_path; }
     }
 
     public class Crew
