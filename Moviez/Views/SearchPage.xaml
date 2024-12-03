@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+             x:Class="Moviez.Views.SearchPage"
+             x:Name="Search"
+             HideSoftInputOnTapped="True"
+             Title="SearchPage">
+    <Grid HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Text="Search Movies"
+               Margin="0,0,0,5"
+               HeightRequest="40"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               VerticalTextAlignment="Center"
+               FontSize="17"/>
+        <SearchBar
+            Grid.Row="1"
+            x:Name="SearchBar"
+            BackgroundColor="White"
+            Placeholder="Search"
+            HorizontalOptions="StartAndExpand"
+            HorizontalTextAlignment="Start"
+            Text="{Binding SearchBarText}"
+            SearchCommand="{Binding SearchMoviesCommand}"
+            SearchCommandParameter="{Binding Source={x:Reference SearchBar}, Path=Text}">
+            <SearchBar.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="TextChanged"
+                    Command="{Binding Source={x:Reference Search}, Path=BindingContext.SearchBarTextChangedCommand}"/>
+            </SearchBar.Behaviors>
+        </SearchBar>
+        <CollectionView HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Grid.Row="2"
+                        Margin="0,5,15,5"
+                        x:Name="MovieCollectionView"
+                        ItemsSource="{Binding Movies}">
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                        <Label Text="No Data Available"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               HorizontalOptions="Fill"
+                               HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="3"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Border Margin="15,0,0,15"
+                                BackgroundColor="White"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="Transparent"
+                                HeightRequest="{OnIdiom Phone=180,Tablet=380}"
+                                VerticalOptions="Fill">
+                            <Border.StrokeShape>
+                                <RoundRectangle
+                                    CornerRadius="6"/>
+                            </Border.StrokeShape>
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="#A7A9AB"
+                                    Offset="0,6"
+                                    Radius="6"
+                                    Opacity="0.3"/>
+                            </Border.Shadow>
+                            <ffimageloading:CachedImage
+                                Grid.Row="0"
+                                VerticalOptions="FillAndExpand"
+                                ErrorPlaceholder="image_placeholder.svg"
+                                LoadingPlaceholder="loading_placeholder.svg"
+                                Grid.RowSpan="2"
+                                DownsampleHeight="{OnIdiom Phone=180,Tablet=300}"
+                                Source="{Binding imageurl}"
+                                Aspect="AspectFill">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={x:Reference MovieCollectionView}, Path=BindingContext.MovieTappedCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                            </ffimageloading:CachedImage>
+                        </Border>
+
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

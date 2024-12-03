@@ -9,6 +9,7 @@ namespace Moviez.Interfaces
         Task<MovieListResponse> SearchMovies(String keyword);
         Task<MovieDetailsResponse> GetMovieDetails(String movieId);
         Task<CreditResponse> GetMovieGredits(string movieId);
+        Task<PersonMovieCreditsResponse> GetPersonMovieCredits(string personId);
     }
 }
 

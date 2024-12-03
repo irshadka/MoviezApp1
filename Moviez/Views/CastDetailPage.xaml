@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    x:Class="Moviez.Views.CastDetailPage"
+    Title="CastDetailPage"
+    BackgroundColor="#F0F1F1">
+    <Grid
+        Padding="0,-60,0,0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+
+            <RowDefinition
+                Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+
+        <CollectionView
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            Grid.Row="0"
+            x:Name="MovieCollectionView"
+            
+            ItemsSource="{Binding PersonCast}">
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Label
+                            Text="No Data Available"
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Center" />
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
+            <CollectionView.Header>
+                <Grid Margin="0,0,0,25" Padding="0,0,0,10">
+                   
+                    <Image
+                        Source="{Binding CastData.imageUrl}"
+                        HeightRequest="500"
+                        Aspect="AspectFill"
+                        VerticalOptions="StartAndExpand"></Image>
+                     <Border HorizontalOptions="FillAndExpand" VerticalOptions="End" HeightRequest="150" Stroke="Transparent" Margin="-1,-1,-1,-1">
+                         <Border.Background>
+                                            <LinearGradientBrush
+                                                EndPoint="0,1">
+                                                <GradientStop
+                                                    Color="Transparent"
+                                                    Offset="0" />
+                                                
+                                                <GradientStop
+                                                    Color="#F0F1F1"
+                                                    Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                        </Border>
+                    <Label Text="{Binding CastData.name}" HorizontalOptions="Center" VerticalOptions="End" Style="{StaticResource CastNameStyle}" TextColor="Black" FontSize="18" Margin="0,0,0,10"></Label>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    Orientation="Vertical"
+                    Span="3" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Border
+                            Margin="10,0,5,15"
+                            BackgroundColor="White"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="Transparent"
+                            HeightRequest="{OnIdiom Phone=180,Tablet=380}"
+                            VerticalOptions="Fill">
+                            <Border.StrokeShape>
+                                <RoundRectangle
+                                    CornerRadius="6" />
+                            </Border.StrokeShape>
+                          
+                            <ffimageloading:CachedImage
+                                Grid.Row="0"
+                                VerticalOptions="FillAndExpand"
+                                ErrorPlaceholder="image_placeholder.svg"
+                                LoadingPlaceholder="loading_placeholder.svg"
+                                Grid.RowSpan="2"
+                                DownsampleHeight="{OnIdiom Phone=180,Tablet=300}"
+                                Source="{Binding imageurl}"
+                                Aspect="AspectFill">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={x:Reference MovieCollectionView}, Path=BindingContext.MovieTappedCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                            </ffimageloading:CachedImage>
+                        </Border>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Border
+            Grid.Row="0"
+            Padding="7"
+            Margin="10,70,10,10"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 20"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            HeightRequest="40"
+            WidthRequest="40">
+            <Border.Background>
+                <RadialGradientBrush>
+                    <GradientStop
+                        Color="#49FFFFFF"
+                        Offset="0.1" />
+                    <GradientStop
+                        Color="#33AA8585"
+                        Offset="1.0" />
+                </RadialGradientBrush>
+            </Border.Background>
+            <Image
+                Source="back_icon"
+                Aspect="AspectFit" />
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding BackCommand}" />
+            </Border.GestureRecognizers>
+        </Border>
+    </Grid>
+</ContentPage>

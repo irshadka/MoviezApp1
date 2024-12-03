@@ -1,9 +1,11 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Moviez.Common;
 using Moviez.Interfaces;
 using Moviez.Models;
 using Moviez.Models.ApiResponses;
+using Moviez.Views;
 
 namespace Moviez.ViewModels
 {
@@ -26,6 +28,8 @@ namespace Moviez.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
+            if (query.Count == 0)
+                return;
             MovieData = query["MovieData"] as MoviesData;
             OnPropertyChanged("Moviedata");
 
@@ -40,7 +44,6 @@ namespace Moviez.ViewModels
                 });
 
             }
-
         }
         private async void GetMovieCredits(string movieId)
         {
@@ -100,6 +103,20 @@ namespace Moviez.ViewModels
             }
             IsBusy = false;
         }
+        [RelayCommand]
+        private async Task CastTapped(Cast selectedItem)
+        {
+            if (IsBusy)
+                return;
+            IsBusy = true;
+            var navigationParameter = new ShellNavigationQueryParameters
+            {
+               { "CastData", selectedItem }
+            };
+            await Shell.Current.GoToAsync(nameof(CastDetailPage), navigationParameter);
+            IsBusy = false;
+        }
+            
     }
 }
 

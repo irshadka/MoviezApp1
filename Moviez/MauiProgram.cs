@@ -1,5 +1,4 @@
-﻿using Camera.MAUI;
-using FFImageLoading.Maui;
+﻿using FFImageLoading.Maui;
 using Microsoft.Extensions.Logging;
 using Moviez.Interfaces;
 using Moviez.Services;
@@ -17,21 +16,41 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseFFImageLoading()
-			.UseMauiCameraView()
 			.UseMauiCommunityToolkit()
+			.RegisterAppservices()
+			.RegisterViewModels()
+			.RegisterViews()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("OpenSans-Bold.ttf", "OpenSansBold");
 			});
-
-		builder.Services.AddSingleton<IMoviezAPIService, MoviezAPIService>();
-		builder.Services.AddTransient<HomePage, HomePageViewModel>();
-		builder.Services.AddTransient<MovieDetailPage, MovieDetailpageViewModel>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
 
 		return builder.Build();
+	}
+	public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
+	{
+		mauiAppBuilder.Services.AddTransient<HomePageViewModel>();
+		mauiAppBuilder.Services.AddTransient<MovieDetailpageViewModel>();
+		mauiAppBuilder.Services.AddTransient<SearchPageViewModel>();
+        mauiAppBuilder.Services.AddTransient<CastDetailPageViewModel>();
+        return mauiAppBuilder;
+	}
+	public static MauiAppBuilder RegisterAppservices(this MauiAppBuilder mauiAppBuilder)
+	{
+		mauiAppBuilder.Services.AddSingleton<IMoviezAPIService, MoviezAPIService>();
+		return mauiAppBuilder;
+	}
+	public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
+	{
+		mauiAppBuilder.Services.AddTransient<HomePage>();
+		mauiAppBuilder.Services.AddTransient<MovieDetailPage>();
+		mauiAppBuilder.Services.AddTransient<SearchPage>();
+        mauiAppBuilder.Services.AddTransient<CastDetailPage>();
+        return mauiAppBuilder;
 	}
 }

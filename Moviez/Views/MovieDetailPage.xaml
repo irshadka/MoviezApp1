@@ -8,6 +8,7 @@
     Background="#F0F1F1"
     Title="MovieDetailPage">
     <ScrollView
+        Margin="0,-60,0,0"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
         <Grid
@@ -16,7 +17,9 @@
             RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition
-                    Height="{OnIdiom Phone=550,Tablet=850}" />
+                    Height="{OnIdiom Phone=200,Tablet=600}" />
+                <RowDefinition
+                    Height="400" />
                 <RowDefinition
                     Height="Auto" />
                 <RowDefinition
@@ -24,33 +27,78 @@
                 <RowDefinition
                     Height="160" />
 
-
             </Grid.RowDefinitions>
+            <ffimageloading:CachedImage
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Source="{Binding MovieDetails.MoviePoster}"
+                FadeAnimationEnabled="True"
+                FadeAnimationDuration="300"
+                FadeAnimationForCachedImages="True"
+                Aspect="AspectFill">
+            </ffimageloading:CachedImage>
             <Border
                 Grid.Row="0"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand"
-                BackgroundColor="White"
-                Stroke="White"
-                Margin="20">
-                <Border.StrokeShape>
-                    <RoundRectangle
-                        CornerRadius="6" />
-                </Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow
-                        Brush="#A7A9AB"
-                        Offset="0,6"
-                        Radius="6"
-                        Opacity="0.4" />
-                </Border.Shadow>
+                Padding="7"
+                Margin="10,70,10,10"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 20"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                HeightRequest="40"
+                WidthRequest="40">
+                <Border.Background>
+                    <RadialGradientBrush>
+                        <GradientStop
+                            Color="#49FFFFFF"
+                            Offset="0.1" />
+                        <GradientStop
+                            Color="#33AA8585"
+                            Offset="1.0" />
+                    </RadialGradientBrush>
+                </Border.Background>
                 <Image
-                    Source="{Binding MovieDetails.MoviePoster}"
-                    Aspect="AspectFill">
-                </Image>
+                    Source="back_icon"
+                    Aspect="AspectFit" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding BackCommand}" />
+                </Border.GestureRecognizers>
             </Border>
             <Border
                 Grid.Row="1"
+                Margin="-1,-1,-1,-2"
+                Stroke="Transparent">
+                <Border.Background>
+                    <LinearGradientBrush
+                        EndPoint="0,1">
+                        <GradientStop
+                            Color="Transparent"
+                            Offset="0" />
+                        <GradientStop
+                            Color="#49F0F1F1"
+                            Offset="0.6" />
+                        <GradientStop
+                            Color="#F0F1F1"
+                            Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <VerticalStackLayout
+                    VerticalOptions="EndAndExpand"
+                    Margin="20">
+                    <Label
+                        Text="{Binding MovieData.title}"
+                        Style="{StaticResource MovieTitleStyle}"
+                        HorizontalTextAlignment="Start"></Label>
+                    <Label
+                        Text="{Binding MovieDetails.Genere}"
+                        Style="{StaticResource MovieDescriptionStyle}"></Label>
+
+                </VerticalStackLayout>
+
+            </Border>
+            <Border
+                Grid.Row="2"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 BackgroundColor="White"
@@ -72,27 +120,28 @@
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand"
                     Spacing="15">
-                    <Label
+                    <!--<Label
                         Text="{Binding MovieData.title}"
                         Style="{StaticResource MovieTitleStyle}"
-                        HorizontalTextAlignment="Center"></Label>
+                        HorizontalTextAlignment="Center"></Label>-->
                     <Label
                         Text="{Binding MovieData.overview}"
                         Style="{StaticResource MovieDescriptionStyle}"></Label>
 
-                    <Label
+                    <!--<Label
                         Text="{Binding MovieDetails.Genere}"
-                        Style="{StaticResource MovieDescriptionStyle}"></Label>
+                        Style="{StaticResource MovieDescriptionStyle}"></Label>-->
                 </StackLayout>
             </Border>
             <Label
                 Margin="20,10,20,10"
                 Text="Cast"
-                Grid.Row="2"></Label>
+                FontAttributes="Bold"
+                Grid.Row="3"></Label>
             <CollectionView
                 Margin="20,0,20,0"
-                Grid.Row="3"
-                x:Name="MovieCollectionView"
+                Grid.Row="4"
+                x:Name="CastCollectionView"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 ItemsSource="{Binding MovieCast}"
@@ -111,57 +160,90 @@
                                 WidthRequest="100"
                                 HorizontalOptions="FillAndExpand"
                                 Stroke="Transparent"
-                                BackgroundColor="AliceBlue"
+                                BackgroundColor="Transparent"
                                 VerticalOptions="Fill">
                                 <Border.StrokeShape>
                                     <RoundRectangle
                                         CornerRadius="6" />
                                 </Border.StrokeShape>
-                                <Border.Shadow>
+                                <!--<Border.Shadow>
                                     <Shadow
                                         Brush="#A7A9AB"
                                         Offset="0,6"
                                         Radius="6"
                                         Opacity="0.3" />
-                                </Border.Shadow>
+                                </Border.Shadow>-->
                                 <Grid
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="Fill"
-                                    Padding="5"
                                     RowSpacing="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition
-                                            Height="60" />
-                                        <RowDefinition
-                                            Height="100" />
-                                    </Grid.RowDefinitions>
+                                            Height="*" />
 
+                                    </Grid.RowDefinitions>
+                                    <ffimageloading:CachedImage
+                                        Grid.Row="0"
+                                        ErrorPlaceholder="image_placeholder.svg"
+                                        LoadingPlaceholder="loading_placeholder.svg"
+                                        VerticalOptions="FillAndExpand"
+                                        DownsampleHeight="140"
+                                        Source="{Binding imageUrl}"
+                                        Aspect="AspectFill" />
                                     <Border
                                         Grid.Row="0"
-                                        BackgroundColor="White"
-                                        HeightRequest="60"
-                                        WidthRequest="60"
+                                        Margin="-1,-1,-1,-1"
+                                        BackgroundColor="Transparent"
+                                        VerticalOptions="EndAndExpand"
+                                        HeightRequest="70"
+                                        Stroke="Transparent"
                                         Padding="0">
-                                        <Border.StrokeShape>
-                                    <RoundRectangle
-                                        CornerRadius="30" />
-                                </Border.StrokeShape>
-                                        <ffimageloading:CachedImage
-                                            Grid.Row="0"
-                                            VerticalOptions="FillAndExpand"
-                                            Grid.RowSpan="2"
-                                            DownsampleHeight="140"
-                                            Source="{Binding imageUrl}"
-                                            HeightRequest="80"
-                                            Aspect="AspectFill" />
+
+                                        <Border.Background>
+                                            <LinearGradientBrush
+                                                EndPoint="0,1">
+                                                <GradientStop
+                                                    Color="Transparent"
+                                                    Offset="0" />
+                                                <!--<GradientStop
+                                                    Color="#49F0F1F1"
+                                                    Offset="0.6" />
+                                                <GradientStop
+                                                    Color="#80F0F1F1"
+                                                    Offset="0.7" />
+                                                <GradientStop
+                                                    Color="#99F0F1F1"
+                                                    Offset="0.80" />-->
+                                                <!--<GradientStop
+                                                    Color="#F0F1F1"
+                                                    Offset="0.8" />-->
+
+                                                <GradientStop
+                                                    Color="#F0F1F1"
+                                                    Offset="0.85" />
+                                                <GradientStop
+                                                    Color="#F0F1F1"
+                                                    Offset="1.0" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
                                     </Border>
 
                                     <Label
-                                        Grid.Row="1"
+                                        Padding="5,0,5,2"
+                                        Grid.Row="0"
                                         Text="{Binding original_name}"
                                         HorizontalTextAlignment="Center"
-                                        Style="{StaticResource MovieDescriptionStyle}"
+                                        VerticalOptions="EndAndExpand"
+                                        Style="{StaticResource CastNameStyle}"
+                                        TextColor="Black"
+                                        FontAttributes="Bold"
                                         LineBreakMode="WordWrap" />
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={x:Reference CastCollectionView}, Path=BindingContext.CastTappedCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </Border>
                         </StackLayout>

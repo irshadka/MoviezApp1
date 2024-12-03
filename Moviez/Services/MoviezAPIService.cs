@@ -20,6 +20,8 @@ namespace Moviez.Services
         private string SearchMoviesUri = "search/movie?query=";
         private string GetMovieDetailsUri = "movie/";
         private string GetCreditsUri = "/credits?language=en-US";
+        private string GetPersonMovieCreditsUri = "person/";
+        private string GetPopularMoviesUri = "movie/popular?language=en-US&page=";
 
 
 
@@ -102,7 +104,7 @@ namespace Moviez.Services
                     BaseClient.DefaultRequestHeaders.Clear();
                     BaseClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
 
-                    var url = string.Format(@"{0}{1}{2}", BaseIpAddress, GetTrendingMoviesUri, pageNumber);
+                    var url = string.Format(@"{0}{1}{2}", BaseIpAddress, GetPopularMoviesUri, pageNumber);
                     httpResp = BaseClient.GetAsync(url).Result;
                     if (httpResp.IsSuccessStatusCode)
                     {
@@ -194,6 +196,45 @@ namespace Moviez.Services
                     var responseData = await httpResp.Content.ReadAsStringAsync();
                     Debug.WriteLine(responseData);
                     response = JsonConvert.DeserializeObject<CreditResponse>(responseData, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                    response.Success = true;
+                }
+                else
+                {
+
+                    response.Success = false;
+                    response.Message = AppResources.NoConnectionMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception : {0}", ex.Message);
+                response.Success = false;
+                response.Message = AppResources.ErrorWentWrong;
+            }
+            return response;
+        }
+
+        public async Task<PersonMovieCreditsResponse> GetPersonMovieCredits(string personId)
+        {
+            PersonMovieCreditsResponse response = new PersonMovieCreditsResponse();
+
+            try
+            {
+                if (IsConnected())
+                {
+
+
+                    var httpResp = new HttpResponseMessage();
+
+
+                    BaseClient.DefaultRequestHeaders.Clear();
+                    BaseClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
+
+                    var url = string.Format(@"{0}{1}{2}{3}", BaseIpAddress, GetPersonMovieCreditsUri, personId, "/movie_credits?language=en-US");
+                    httpResp = BaseClient.GetAsync(url).Result;
+                    var responseData = await httpResp.Content.ReadAsStringAsync();
+                    Debug.WriteLine(responseData);
+                    response = JsonConvert.DeserializeObject<PersonMovieCreditsResponse>(responseData, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                     response.Success = true;
                 }
                 else

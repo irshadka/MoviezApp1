@@ -445,5 +445,16 @@
                 Value="{AppThemeBinding Light={StaticResource DescriptionColor}, Dark={StaticResource DescriptionColor}}"/>
     </Style>
 
+    <Style TargetType="Label"
+           x:Key="CastNameStyle">
+        <Setter Property="FontFamily"
+                Value="OpenSansBold"/>
+        <Setter Property="LineHeight" Value="1"/>
+        <Setter Property="FontSize"
+                Value="{OnIdiom Phone= {OnPlatform iOS=12, Android=12 },Tablet= {OnPlatform iOS=13, Android=13 }}"/>
+        <Setter Property="TextColor"
+                Value="{AppThemeBinding Light={StaticResource CastNameColor}, Dark={StaticResource CastNameColor}}"/>
+    </Style>
+
 
 </ResourceDictionary>

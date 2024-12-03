@@ -36,11 +36,7 @@ namespace Moviez.ViewModels
             });
         }
 
-        [RelayCommand]
-        private async Task SearchMovies(string query)
-        {
-            await SearchMoviesAsync(query);
-        }
+      
         [RelayCommand]
         private void SearchBarTextChanged()
         {
@@ -52,19 +48,20 @@ namespace Moviez.ViewModels
                     Movies = _baseMoviesData;
                     NoDataLabelVisible = false;
                 }
-
-
             }
         }
         [RelayCommand]
         private async Task MovieTapped(MoviesData selectedItem)
         {
+            if (IsBusy)
+                return;
+            IsBusy = true;
             var navigationParameter = new ShellNavigationQueryParameters
             {
                { "MovieData", selectedItem }
             };
             await Shell.Current.GoToAsync(nameof(MovieDetailPage), navigationParameter);
-            // await DisplayAlert(AppResources.AppTitle, AppResources.NotImplemented);
+            IsBusy = false;
         }
         [RelayCommand]
         private async Task LoadMoreItems()
@@ -108,46 +105,6 @@ namespace Moviez.ViewModels
             }
         }
 
-
-        private async Task SearchMoviesAsync(string query)
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-            try
-            {
-
-
-                var response = await _movieApiService.SearchMovies(query);
-                if (response.Success)
-                {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        Movies = response.results;
-                        if (Movies == null || Movies.Count == 0)
-                            NoDataLabelVisible = true;
-                        else
-                            NoDataLabelVisible = false;
-
-                    });
-                }
-                else
-                {
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
-                        await DisplayAlert(AppResources.AppTitle, response.Message);
-                    });
-                }
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-            IsBusy = false;
-        }
-
-
         private async void GetTrendingMoviesAsync(int currentPage)
         {
             try
@@ -179,7 +136,10 @@ namespace Moviez.ViewModels
             }
             finally
             {
-                IsBusy = false;
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    IsBusy = false;
+                });
             }
         }
     }

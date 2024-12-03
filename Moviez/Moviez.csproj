@@ -57,6 +57,15 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiImage Update="Resources\Images\search_tab.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\cast_tab.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\qr_scan.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,8 +75,6 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="FFImageLoading.Maui" Version="1.2.7" />
-		<PackageReference Include="Camera.MAUI" Version="1.5.0" />
-		<PackageReference Include="Camera.MAUI.ZXing" Version="1.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
 	</ItemGroup>
 
@@ -79,11 +86,12 @@
 	  <None Remove="Views\" />
 	  <None Remove="Models\ApiResponses\" />
 	  <None Remove="Common\" />
-	  <None Remove="Resources\Images\qr_scan.svg" />
 	  <None Remove="Converters\" />
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Resources\Splash\" />
 	  <None Remove="Resources\Splash\splash.svg" />
+	  <None Remove="Resources\Images\qr_scan.svg" />
+	  <None Remove="Resources\Fonts\OpenSans-Bold.ttf" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Interfaces\" />
@@ -106,12 +114,32 @@
 	  <Compile Update="Common\AppResources.Designer.cs">
 	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="MauiProgram.cs">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Compile>
 	</ItemGroup>
 	<ItemGroup>
-	  <BundleResource Include="Resources\Images\qr_scan.svg" />
 	  <BundleResource Include="Resources\AppIcon\appiconfg.svg" />
+	  <BundleResource Include="Resources\Images\back_icon.svg" />
+	  <BundleResource Include="Resources\Images\cast_tab.svg" />
+	  <BundleResource Include="Resources\Images\image_placeholder.svg" />
+	  <BundleResource Include="Resources\Images\loading_placeholder.svg" />
+	  <BundleResource Include="Resources\Images\movie_tab.svg" />
+	  <BundleResource Include="Resources\Images\qr_scan.svg" />
+	  <BundleResource Include="Resources\Images\search_tab.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiSplashScreen Include="Resources\Splash\splash.svg" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiFont Update="Resources\Fonts\OpenSans-Bold.ttf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiFont>
+	  <MauiFont Update="Resources\Fonts\OpenSans-Regular.ttf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiFont>
+	  <MauiFont Update="Resources\Fonts\OpenSans-Semibold.ttf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiFont>
 	</ItemGroup>
 </Project>

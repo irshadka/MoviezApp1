@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using Camera.MAUI;
-using Camera.MAUI.ZXing;
 using Moviez.Common;
 using Moviez.ViewModels;
 
@@ -12,6 +10,7 @@ public partial class HomePage : ContentPage
 
     public HomePage(HomePageViewModel viewModel)
     {
+        Shell.SetNavBarIsVisible(this, false);
         InitializeComponent();
         _vmodel = viewModel;
         this.BindingContext = viewModel;

@@ -5,12 +5,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Moviez.Views"
     Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
     Title="Moviez">
 
-  
-    <ShellContent
+    <TabBar>
+        <Tab Title="Popular Movies"
+             Icon="movie_tab">
+            <ShellContent ContentTemplate="{DataTemplate local:HomePage}"/>
+        </Tab>
+        <Tab Title="Search"
+             Icon="search_tab">
+            <ShellContent ContentTemplate="{DataTemplate local:SearchPage}"/>
+        </Tab>
+    </TabBar>
+
+    <!-- <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:HomePage}"
-        Route="HomePage" />
+        Route="HomePage"/> -->
 
 </Shell>
