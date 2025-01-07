@@ -6,28 +6,40 @@
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     x:Class="Moviez.Views.MovieDetailPage"
     Background="#F0F1F1"
+    xmlns:controls="clr-namespace:Moviez.Controls"
     Title="MovieDetailPage">
     <ScrollView
-        Margin="0,-60,0,0"
+        VerticalScrollBarVisibility="Never"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
+        <ScrollView.Margin>
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="iOS"
+                    Value="0,-60,0,0"/>
+                <On Platform="Android"
+                    Value="0,-20,0,0"/>
+
+            </OnPlatform>
+        </ScrollView.Margin>
         <Grid
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition
-                    Height="{OnIdiom Phone=200,Tablet=600}" />
+                    Height="{OnIdiom Phone=200,Tablet=600}"/>
                 <RowDefinition
-                    Height="400" />
+                    Height="400"/>
                 <RowDefinition
-                    Height="Auto" />
+                    Height="Auto"/>
                 <RowDefinition
-                    Height="Auto" />
+                    Height="Auto"/>
                 <RowDefinition
-                    Height="160" />
+                    Height="160"/>
 
             </Grid.RowDefinitions>
+
+
             <ffimageloading:CachedImage
                 Grid.Row="0"
                 Grid.RowSpan="2"
@@ -40,29 +52,37 @@
             <Border
                 Grid.Row="0"
                 Padding="7"
-                Margin="10,70,10,10"
                 Stroke="Transparent"
                 StrokeShape="RoundRectangle 20"
                 HorizontalOptions="Start"
                 VerticalOptions="Start"
                 HeightRequest="40"
                 WidthRequest="40">
+                <Border.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS"
+                            Value="10,90,10,10"/>
+                        <On Platform="Android"
+                            Value="10,45,10,10"/>
+
+                    </OnPlatform>
+                </Border.Margin>
                 <Border.Background>
                     <RadialGradientBrush>
                         <GradientStop
-                            Color="#49FFFFFF"
-                            Offset="0.1" />
+                            Color="#99151010"
+                            Offset="0.1"/>
                         <GradientStop
-                            Color="#33AA8585"
-                            Offset="1.0" />
+                            Color="#9B6F6C6C"
+                            Offset="1.0"/>
                     </RadialGradientBrush>
                 </Border.Background>
                 <Image
                     Source="back_icon"
-                    Aspect="AspectFit" />
+                    Aspect="AspectFit"/>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer
-                        Command="{Binding BackCommand}" />
+                        Command="{Binding BackCommand}"/>
                 </Border.GestureRecognizers>
             </Border>
             <Border
@@ -74,13 +94,13 @@
                         EndPoint="0,1">
                         <GradientStop
                             Color="Transparent"
-                            Offset="0" />
+                            Offset="0"/>
                         <GradientStop
                             Color="#49F0F1F1"
-                            Offset="0.6" />
+                            Offset="0.6"/>
                         <GradientStop
                             Color="#F0F1F1"
-                            Offset="1.0" />
+                            Offset="1.0"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <VerticalStackLayout
@@ -107,14 +127,14 @@
                 Padding="10">
                 <Border.StrokeShape>
                     <RoundRectangle
-                        CornerRadius="6" />
+                        CornerRadius="6"/>
                 </Border.StrokeShape>
                 <Border.Shadow>
                     <Shadow
                         Brush="#A7A9AB"
                         Offset="0,6"
                         Radius="6"
-                        Opacity="0.3" />
+                        Opacity="0.3"/>
                 </Border.Shadow>
                 <StackLayout
                     HorizontalOptions="FillAndExpand"
@@ -148,7 +168,7 @@
                 SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout
-                        Orientation="Horizontal" />
+                        Orientation="Horizontal"/>
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
@@ -164,7 +184,7 @@
                                 VerticalOptions="Fill">
                                 <Border.StrokeShape>
                                     <RoundRectangle
-                                        CornerRadius="6" />
+                                        CornerRadius="6"/>
                                 </Border.StrokeShape>
                                 <!--<Border.Shadow>
                                     <Shadow
@@ -179,7 +199,7 @@
                                     RowSpacing="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition
-                                            Height="*" />
+                                            Height="*"/>
 
                                     </Grid.RowDefinitions>
                                     <ffimageloading:CachedImage
@@ -189,7 +209,7 @@
                                         VerticalOptions="FillAndExpand"
                                         DownsampleHeight="140"
                                         Source="{Binding imageUrl}"
-                                        Aspect="AspectFill" />
+                                        Aspect="AspectFill"/>
                                     <Border
                                         Grid.Row="0"
                                         Margin="-1,-1,-1,-1"
@@ -204,7 +224,7 @@
                                                 EndPoint="0,1">
                                                 <GradientStop
                                                     Color="Transparent"
-                                                    Offset="0" />
+                                                    Offset="0"/>
                                                 <!--<GradientStop
                                                     Color="#49F0F1F1"
                                                     Offset="0.6" />
@@ -220,10 +240,10 @@
 
                                                 <GradientStop
                                                     Color="#F0F1F1"
-                                                    Offset="0.85" />
+                                                    Offset="0.85"/>
                                                 <GradientStop
                                                     Color="#F0F1F1"
-                                                    Offset="1.0" />
+                                                    Offset="1.0"/>
                                             </LinearGradientBrush>
                                         </Border.Background>
                                     </Border>
@@ -237,11 +257,11 @@
                                         Style="{StaticResource CastNameStyle}"
                                         TextColor="Black"
                                         FontAttributes="Bold"
-                                        LineBreakMode="WordWrap" />
+                                        LineBreakMode="WordWrap"/>
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Source={x:Reference CastCollectionView}, Path=BindingContext.CastTappedCommand}"
-                                            CommandParameter="{Binding .}" />
+                                            CommandParameter="{Binding .}"/>
 
                                     </Grid.GestureRecognizers>
                                 </Grid>

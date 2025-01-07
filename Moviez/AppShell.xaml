@@ -6,6 +6,10 @@
     xmlns:local="clr-namespace:Moviez.Views"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarTitleColor="Black"
+    Shell.TabBarUnselectedColor="Black"
+    Shell.TabBarForegroundColor="#ff8532"
     Title="Moviez">
 
     <TabBar>

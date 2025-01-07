@@ -23,6 +23,7 @@ public partial class SearchPageViewModel : PageBaseViewModel
     public SearchPageViewModel(IMoviezAPIService movieApiService)
     {
         _movieApiService = movieApiService;
+        _currentPage = 1;
     }
 
     [RelayCommand]
@@ -32,7 +33,7 @@ public partial class SearchPageViewModel : PageBaseViewModel
             {
                { "MovieData", selectedItem }
             };
-        await Shell.Current.GoToAsync(nameof(MovieDetailPage), navigationParameter);
+        await Shell.Current.GoToAsync(nameof(MovieDetailPage), false, navigationParameter);
     }
     [RelayCommand]
     private async Task SearchMovies(string query)
@@ -47,26 +48,102 @@ public partial class SearchPageViewModel : PageBaseViewModel
         IsBusy = true;
         try
         {
-            var response = await _movieApiService.SearchMovies(query);
+            _currentPage = 1;
+            var response = await _movieApiService.SearchMovies(query, _currentPage.ToString());
             if (response.Success)
             {
+                if(response.results == null)
+                    return;
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Movies = response.results;
+                    Movies = new ObservableCollection<MoviesData>();
+                    var filtered = response.results.Where(i => i.poster_path != null).ToList();
+                    foreach (var movie in filtered)
+                    {
+                        Movies.Add(movie);
+                    }
                     if (Movies == null || Movies.Count == 0)
+                    {
                         NoDataLabelVisible = true;
+                        _hasMoreItems = false;
+                    }
+
                     else
+                    {
                         NoDataLabelVisible = false;
+                        _currentPage++;
+                        _totalPages = response.total_pages;
+                        if (_totalPages < _currentPage)
+                            _hasMoreItems = false;
+                        else
+                            _hasMoreItems = true;
+                    }
+
                 });
             }
             else
             {
+                _hasMoreItems = false;
                 Movies = new ObservableCollection<MoviesData>();
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     await DisplayAlert(AppResources.AppTitle, response.Message);
                 });
             }
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+        IsBusy = false;
+    }
+    [RelayCommand]
+    private async Task LoadMoreItems()
+    {
+        if (IsBusy)
+            return;
+
+        IsBusy = true;
+        try
+        {
+            if (_hasMoreItems)
+            {
+                var response = await _movieApiService.SearchMovies(_searchBarText, _currentPage.ToString());
+                if (response.Success)
+                {
+                    if(response.results == null)
+                    return;
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                         var filtered = response.results.Where(i => i.poster_path != null).ToList();
+                        foreach (var movie in filtered)
+                        {
+                            Movies.Add(movie);
+                        }
+
+                        _currentPage++;
+                        _totalPages = response.total_pages;
+                        if (_totalPages < _currentPage)
+                            _hasMoreItems = false;
+                        else
+                            _hasMoreItems = true;
+                        if (Movies == null || Movies.Count == 0)
+                            NoDataLabelVisible = true;
+                        else
+                            NoDataLabelVisible = false;
+                    });
+                }
+                else
+                {
+                    Movies = new ObservableCollection<MoviesData>();
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await DisplayAlert(AppResources.AppTitle, response.Message);
+                    });
+                }
+            }
+
+
         }
         finally
         {

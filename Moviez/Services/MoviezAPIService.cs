@@ -136,7 +136,7 @@ namespace Moviez.Services
             return response;
         }
 
-        public async Task<MovieListResponse> SearchMovies(string keyword)
+        public async Task<MovieListResponse> SearchMovies(string keyword, string pageNumber)
         {
             MovieListResponse response = new MovieListResponse();
 
@@ -152,7 +152,7 @@ namespace Moviez.Services
                     BaseClient.DefaultRequestHeaders.Clear();
                     BaseClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
 
-                    var url = string.Format(@"{0}{1}{2}{3}", BaseIpAddress, SearchMoviesUri,keyword, "&include_adult=false&language=en-US&page=1");
+                    var url = string.Format(@"{0}{1}{2}{3}{4}", BaseIpAddress, SearchMoviesUri,keyword, "&include_adult=false&language=en-US&page=",pageNumber);
                     httpResp = BaseClient.GetAsync(url).Result;
                     var responseData = await httpResp.Content.ReadAsStringAsync();
                     Debug.WriteLine(responseData);

@@ -40,9 +40,12 @@
         </SearchBar>
         <CollectionView HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand"
+                        VerticalScrollBarVisibility="Never"
                         Grid.Row="2"
                         Margin="0,5,15,5"
                         x:Name="MovieCollectionView"
+                         RemainingItemsThreshold="5"
+                         RemainingItemsThresholdReachedCommand="{Binding LoadMoreItemsCommand}"
                         ItemsSource="{Binding Movies}">
             <CollectionView.EmptyView>
                 <ContentView>

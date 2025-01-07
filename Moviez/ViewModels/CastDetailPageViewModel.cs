@@ -51,7 +51,7 @@ namespace Moviez.ViewModels
             {
                { "MovieData", movies }
             };
-            await Shell.Current.GoToAsync(nameof(MovieDetailPage), navigationParameter);
+            await Shell.Current.GoToAsync(nameof(MovieDetailPage),false, navigationParameter);
             IsBusy = false;
         }
 

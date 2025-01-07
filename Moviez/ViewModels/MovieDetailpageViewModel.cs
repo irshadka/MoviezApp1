@@ -35,7 +35,10 @@ namespace Moviez.ViewModels
 
             if (MovieData != null)
             {
-                MovieDetails.MoviePoster = MoviezAppConstants.TMDBimageDetailPath + MovieData.poster_path;
+                if (MovieData.poster_path != null && MovieData.poster_path != string.Empty)
+                    MovieDetails.MoviePoster = MoviezAppConstants.TMDBimageDetailPath + MovieData.poster_path;
+                else
+                    MovieDetails.MoviePoster = "";
                 Task.Run(() =>
                 {
 
@@ -113,10 +116,10 @@ namespace Moviez.ViewModels
             {
                { "CastData", selectedItem }
             };
-            await Shell.Current.GoToAsync(nameof(CastDetailPage), navigationParameter);
+            await Shell.Current.GoToAsync(nameof(CastDetailPage), false, navigationParameter);
             IsBusy = false;
         }
-            
+
     }
 }
 

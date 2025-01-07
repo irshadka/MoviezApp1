@@ -7,9 +7,17 @@
     Title="CastDetailPage"
     BackgroundColor="#F0F1F1">
     <Grid
-        Padding="0,-60,0,0"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
+        <Grid.Padding>
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="iOS"
+                    Value="0,-60,0,0"/>
+                <On Platform="Android"
+                    Value="0,-20,0,0"/>
+
+            </OnPlatform>
+        </Grid.Padding>
         <Grid.RowDefinitions>
 
             <RowDefinition
@@ -23,9 +31,9 @@
             VerticalOptions="FillAndExpand"
             Grid.Row="0"
             x:Name="MovieCollectionView"
-            
+            VerticalScrollBarVisibility="Never"
             ItemsSource="{Binding PersonCast}">
-            <CollectionView.EmptyView>
+            <!-- <CollectionView.EmptyView>
                 <ContentView>
                     <StackLayout
                         HorizontalOptions="Center"
@@ -35,39 +43,52 @@
                             FontAttributes="Bold"
                             FontSize="18"
                             HorizontalOptions="Fill"
-                            HorizontalTextAlignment="Center" />
+                            HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </ContentView>
-            </CollectionView.EmptyView>
+            </CollectionView.EmptyView> -->
             <CollectionView.Header>
-                <Grid Margin="0,0,0,25" Padding="0,0,0,10">
-                   
-                    <Image
+                <Grid Margin="0,0,0,25"
+                      Padding="0,0,0,10">
+
+                    <ffimageloading:CachedImage
                         Source="{Binding CastData.imageUrlLarge}"
                         HeightRequest="500"
                         Aspect="AspectFill"
-                        VerticalOptions="StartAndExpand"></Image>
-                     <Border HorizontalOptions="FillAndExpand" VerticalOptions="End" HeightRequest="150" Stroke="Transparent" Margin="-1,-1,-1,-1">
-                         <Border.Background>
-                                            <LinearGradientBrush
-                                                EndPoint="0,1">
-                                                <GradientStop
-                                                    Color="Transparent"
-                                                    Offset="0" />
-                                                
-                                                <GradientStop
-                                                    Color="#F0F1F1"
-                                                    Offset="1.0" />
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                        </Border>
-                    <Label Text="{Binding CastData.name}" HorizontalOptions="Center" VerticalOptions="End" Style="{StaticResource CastNameStyle}" TextColor="Black" FontSize="18" Margin="0,0,0,10"></Label>
+                        FadeAnimationDuration="300"
+                        FadeAnimationForCachedImages="True"
+                        VerticalOptions="StartAndExpand"></ffimageloading:CachedImage>
+                    <Border HorizontalOptions="FillAndExpand"
+                            VerticalOptions="End"
+                            HeightRequest="150"
+                            Stroke="Transparent"
+                            Margin="-1,-1,-1,-1">
+                        <Border.Background>
+                            <LinearGradientBrush
+                                EndPoint="0,1">
+                                <GradientStop
+                                    Color="Transparent"
+                                    Offset="0"/>
+
+                                <GradientStop
+                                    Color="#F0F1F1"
+                                    Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Label Text="{Binding CastData.name}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="End"
+                           Style="{StaticResource CastNameStyle}"
+                           TextColor="Black"
+                           FontSize="18"
+                           Margin="0,0,0,10"></Label>
                 </Grid>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <GridItemsLayout
                     Orientation="Vertical"
-                    Span="3" />
+                    Span="3"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -81,9 +102,9 @@
                             VerticalOptions="Fill">
                             <Border.StrokeShape>
                                 <RoundRectangle
-                                    CornerRadius="6" />
+                                    CornerRadius="6"/>
                             </Border.StrokeShape>
-                          
+
                             <ffimageloading:CachedImage
                                 Grid.Row="0"
                                 VerticalOptions="FillAndExpand"
@@ -96,7 +117,7 @@
                                 <ffimageloading:CachedImage.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding Source={x:Reference MovieCollectionView}, Path=BindingContext.MovieTappedCommand}"
-                                        CommandParameter="{Binding .}" />
+                                        CommandParameter="{Binding .}"/>
                                 </ffimageloading:CachedImage.GestureRecognizers>
                             </ffimageloading:CachedImage>
                         </Border>
@@ -108,29 +129,37 @@
         <Border
             Grid.Row="0"
             Padding="7"
-            Margin="10,70,10,10"
             Stroke="Transparent"
             StrokeShape="RoundRectangle 20"
             HorizontalOptions="Start"
             VerticalOptions="Start"
             HeightRequest="40"
             WidthRequest="40">
+            <Border.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS"
+                        Value="10,70,10,10"/>
+                    <On Platform="Android"
+                        Value="10,45,10,10"/>
+
+                </OnPlatform>
+            </Border.Margin>
             <Border.Background>
                 <RadialGradientBrush>
                     <GradientStop
-                        Color="#49FFFFFF"
-                        Offset="0.1" />
+                        Color="#99151010"
+                        Offset="0.1"/>
                     <GradientStop
-                        Color="#33AA8585"
-                        Offset="1.0" />
+                        Color="#9B6F6C6C"
+                        Offset="1.0"/>
                 </RadialGradientBrush>
             </Border.Background>
             <Image
                 Source="back_icon"
-                Aspect="AspectFit" />
+                Aspect="AspectFit"/>
             <Border.GestureRecognizers>
                 <TapGestureRecognizer
-                    Command="{Binding BackCommand}" />
+                    Command="{Binding BackCommand}"/>
             </Border.GestureRecognizers>
         </Border>
     </Grid>

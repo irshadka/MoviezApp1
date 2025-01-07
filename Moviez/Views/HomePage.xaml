@@ -16,12 +16,11 @@
             VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition
-                    Height="Auto" />
+                    Height="Auto"/>
                 <RowDefinition
-                    Height="5" />
+                    Height="5"/>
                 <RowDefinition
-                    Height="*" />
-
+                    Height="*"/>
             </Grid.RowDefinitions>
             <Label
                 Text="Popular Movies"
@@ -30,8 +29,9 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center"
-                FontSize="17" />
+                FontSize="17"/>
             <CollectionView
+                VerticalScrollBarVisibility="Never"
                 Grid.Row="2"
                 IsVisible="{Binding NoDataLabelVisible, Converter={StaticResource InversionConverter}}"
                 x:Name="MovieCollectionView"
@@ -45,7 +45,7 @@
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         Orientation="Vertical"
-                        Span="2" />
+                        Span="2"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -59,14 +59,14 @@
                                 VerticalOptions="Fill">
                                 <Border.StrokeShape>
                                     <RoundRectangle
-                                        CornerRadius="6" />
+                                        CornerRadius="6"/>
                                 </Border.StrokeShape>
                                 <Border.Shadow>
                                     <Shadow
                                         Brush="#A7A9AB"
                                         Offset="0,6"
                                         Radius="6"
-                                        Opacity="0.3" />
+                                        Opacity="0.3"/>
                                 </Border.Shadow>
                                 <ffimageloading:CachedImage
                                     Grid.Row="0"
@@ -80,13 +80,11 @@
                                     <ffimageloading:CachedImage.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Source={x:Reference MovieCollectionView}, Path=BindingContext.MovieTappedCommand}"
-                                            CommandParameter="{Binding .}" />
+                                            CommandParameter="{Binding .}"/>
                                     </ffimageloading:CachedImage.GestureRecognizers>
                                 </ffimageloading:CachedImage>
                             </Border>
-
                         </StackLayout>
-                      
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -103,7 +101,7 @@
                 HorizontalOptions="Center"
                 IsRunning="{Binding IsBusy}"
                 IsVisible="{Binding IsBusy}"
-                VerticalOptions="Center" />
+                VerticalOptions="Center"/>
 
         </Grid>
 

@@ -13,7 +13,9 @@ public partial class HomePage : ContentPage
         Shell.SetNavBarIsVisible(this, false);
         InitializeComponent();
         _vmodel = viewModel;
+       
         this.BindingContext = viewModel;
+      
     }
 
 }

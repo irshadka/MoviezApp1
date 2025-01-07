@@ -60,7 +60,7 @@ namespace Moviez.ViewModels
             {
                { "MovieData", selectedItem }
             };
-            await Shell.Current.GoToAsync(nameof(MovieDetailPage), navigationParameter);
+            await Shell.Current.GoToAsync(nameof(MovieDetailPage),false, navigationParameter);
             IsBusy = false;
         }
         [RelayCommand]
